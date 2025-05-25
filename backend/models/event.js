@@ -11,7 +11,7 @@ const schema = mongoose.Schema({
 },
   date: { type: Date, default: Date.now},
   time : {type: String}
-})
+},{timestamps: true }); 
 
 const eventModel = mongoose.model('event', schema)
 

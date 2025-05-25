@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-
-import { FaTimes, FaUser, FaEnvelope, FaCalendarAlt, FaClock, FaClipboardList } from 'react-icons/fa'; // Corrected import path
-import Header from '../components/Header';
-
+import  { useState } from 'react';
+import { FaTimes, FaUser, FaEnvelope, FaCalendarAlt, FaClock, FaClipboardList, FaArrowRight, FaCheckCircle, FaStar, FaMapMarkerAlt } from 'react-icons/fa'; // Icons import
+import Header from '../components/Header'
 function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -32,8 +30,6 @@ function Home() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
-    
     setFormData({ ...formData, [name]: value });
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' })); // Clear specific error
   };
@@ -60,30 +56,44 @@ function Home() {
 
     alert('Event booked successfully!');
     handleCloseModal();
-    
+
+    // Example of API call (replace with your actual backend endpoint)
     try {
-     let response = await fetch("http://localhost:3000/user/eventAdd", {
+      const response = await fetch("http://localhost:3000/user/eventAdd", {
         method: "POST",
-        headers: {"Content-Type": "application/json",},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      let resData = await response.json();
+      const resData = await response.json();
+      console.log("res==>", resData.data.email);
+      window.localStorage.setItem('user', resData.data.email)
 
-        console.log("res==>", resData.data.email);
-
-        window.localStorage.setItem('user', resData.data.email)
-        
-      
-    } 
+      console.log("Form data submitted:", formData); 
+    }
     catch (error) {
-      alert(error.message)
+      console.error("Error submitting form:", error);
+      alert(error.message);
     }
   };
+
+  // Dummy data for new sections
+  const featuredEvents = [
+    { id: 1, title: 'Global Tech Conference 2025', date: 'Aug 15, 2025', location: 'Virtual', image: 'https://placehold.co/400x250/6A0DAD/FFFFFF?text=Tech+Conf' },
+    { id: 2, title: 'Summer Music Festival', date: 'Sep 10-12, 2025', location: 'City Park', image: 'https://placehold.co/400x250/FACC15/6A0DAD?text=Music+Fest' },
+    { id: 3, title: 'Art & Culture Expo', date: 'Oct 20, 2025', location: 'Exhibition Hall', image: 'https://placehold.co/400x250/6366F1/FFFFFF?text=Art+Expo' },
+    { id: 4, title: 'Food & Wine Tasting', date: 'Nov 5, 2025', location: 'Downtown Venue', image: 'https://placehold.co/400x250/EF4444/FFFFFF?text=Food+Wine' },
+  ];
+
+  const howItWorksSteps = [
+    { id: 1, title: 'Find Your Event', description: 'Browse through a wide range of events tailored to your interests.' },
+    { id: 2, title: 'Book Seamlessly', description: 'Fill out our quick and easy booking form in just a few clicks.' },
+    { id: 3, title: 'Enjoy the Experience', description: 'Receive your confirmation and get ready for an unforgettable event!' },
+  ];
 
   return (
     <div className="homepage-wrapper">
       {/* Header */}
-     <Header />
+      <Header />
 
       {/* Hero Section */}
       <main className="main-content">
@@ -102,6 +112,57 @@ function Home() {
           </button>
         </section>
       </main>
+
+      {/* Featured Events Section */}
+      <section className="featured-events-section">
+        <div className="container">
+          <h2 className="section-heading">Featured Events</h2>
+          <p className="section-subheading">Don't miss out on these popular upcoming events!</p>
+          <div className="events-grid">
+            {featuredEvents.map(event => (
+              <div key={event.id} className="event-card">
+                <div className="event-card-image" style={{ backgroundImage: `url(${event.image})` }}></div>
+                <div className="event-card-content">
+                  <h3 className="event-card-title">{event.title}</h3>
+                  <p className="event-card-meta"><FaCalendarAlt /> {event.date}</p>
+                  <p className="event-card-meta"><FaMapMarkerAlt /> {event.location}</p>
+                  <button className="view-event-btn">View Details <FaArrowRight /></button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="how-it-works-section">
+        <div className="container">
+          <h2 className="section-heading">How It Works</h2>
+          <p className="section-subheading">Booking your perfect event is as easy as 1-2-3!</p>
+          <div className="steps-grid">
+            {howItWorksSteps.map(step => (
+              <div key={step.id} className="step-card">
+                <div className="step-number">{step.id}</div>
+                <h3 className="step-title">{step.title}</h3>
+                <p className="step-description">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action Section (Optional, but good for engagement) */}
+      <section className="cta-section">
+        <div className="container cta-content">
+          <h2 className="cta-title">Ready to find your next adventure?</h2>
+          <p className="cta-description">Explore our full list of events or book a custom one now!</p>
+          <div className="cta-buttons">
+            <button onClick={handleOpenModal} className="cta-btn primary-cta">Book Your Event</button>
+            <a href="#" className="cta-btn secondary-cta">Explore All Events</a>
+          </div>
+        </div>
+      </section>
+
 
       {/* Event Booking Form Modal */}
       {isModalOpen && (
