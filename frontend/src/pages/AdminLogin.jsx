@@ -30,7 +30,7 @@ function AdminLoginPage() {
     if (!validateForm()) return;
 
     try {
-      let response = await fetch("http://localhost:3000/admin/login", {
+      let response = await fetch("https://evnetbooking-production.up.railway.app/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({email, password}),

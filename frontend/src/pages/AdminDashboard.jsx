@@ -99,7 +99,7 @@ function AdminDashboard() {
     );
    
     try {
-      let response = await fetch(`http://localhost:3000/admin/eventStatusChnaged/${eventId}`, {
+      let response = await fetch(`https://evnetbooking-production.up.railway.app/admin/eventStatusChnaged/${eventId}`, {
         method : 'PUT',
         headers : {'Content-type' : 'application/json'},
         body: JSON.stringify({status: newStatus})
@@ -119,7 +119,7 @@ function AdminDashboard() {
   };
 
  useEffect(() => {
-    fetch(`http://localhost:3000/admin/allEventsGet`)
+    fetch(`https://evnetbooking-production.up.railway.app/admin/allEventsGet`)
        .then(res => res.json())
        .then(data => setEvents(data.data))
        .catch(err => alert(err.message))

@@ -59,7 +59,7 @@ function Home() {
 
     // Example of API call (replace with your actual backend endpoint)
     try {
-      const response = await fetch("http://localhost:3000/user/eventAdd", {
+      const response = await fetch("https://evnetbooking-production.up.railway.app/user/eventAdd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

@@ -11,7 +11,7 @@ function ProfilePage() {
 
 
  useEffect(() => {
-   fetch(`http://localhost:3000/user/profile/${window.localStorage.getItem('user')}`)
+   fetch(`https://evnetbooking-production.up.railway.app/user/profile/${window.localStorage.getItem('user')}`)
       .then(res => res.json())
       .then(data => setBookedEvents(data.data))
       .catch(err => alert(err.message))
